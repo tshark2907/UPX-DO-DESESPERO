@@ -29,12 +29,12 @@ if(isset($_GET['submit']) and !empty($_GET['email']) and !empty($_GET['senha']))
     include_once('config.php');
     $emailLogin = $_GET['email'];
     $senhaLogin = $_GET['password'];
-    $tryLogin = mysqli_query($conexao, "SELECT id_usuario, username, password, email FROM usuarios WHERE password = '$senhaLogin' AND email_user = '$emailLogin'");
+    $tryLogin = mysqli_query($conexao, "SELECT id_usuario, username, password, email FROM usuarios WHERE password = '$senhaLogin' AND email = '$emailLogin'");
 
 if ($tryLogin) {
-    $userInfo = mysqli_fetch_assoc($tryLogin);
-
-    if ($userInfo) {
+if ($tryLogin) {
+    if (mysqli_num_rows($tryLogin) > 0) {
+        $userInfo = mysqli_fetch_assoc($tryLogin);
         $_SESSION['email'] = $emailLogin;
         $_SESSION['password'] = $senhaLogin;
         $_SESSION['username'] = $userInfo['username'];
