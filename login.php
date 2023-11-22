@@ -1,5 +1,5 @@
 <?php 
-if(isset($_POST['submit']) and !empty($_POST['email']) and !empty($POST['password'])){
+if(isset($_POST['submit']) and !empty($_POST['email']) and !empty($_POST['password'])){
     include_once('config.php');
     $nome = $_POST['name'];
     $email = $_POST['email'];
@@ -27,19 +27,19 @@ if(isset($_GET['submit']) and !empty($_GET['email']) and !empty($_GET['senha']))
     include_once('config.php');
     $emailLogin = $_GET['email'];
     $senhaLogin = $_GET['password'];
-    $tryLogin = mysqli_query($conexao, "SELECT (*) FROM usuarios WHERE password = '$senhaLogin' AND email_user = '$emailLogin'");
+    $tryLogin = mysqli_query($conexao, "SELECT id_usuario,username,password,email FROM usuarios WHERE password = '$senhaLogin' AND email_user = '$emailLogin'");
     $userName = $tryLogin['username'];
-    if(mysqli_num_rows($tryLogin) < 1){
+    if(mysqli_num_rows($tryLogin) != 1){
         unset($_SESSION['email']);
         unset($_SESSION['password']);
         header('Location: login.php');
         echo('Usuário ou senha incorretos');
     } else {
-        header('Location: index.php');
         $_SESSION['email'] = $emailLogin;
         $_SESSION['password'] = $senhaLogin;
         $_SESSION['username'] = $userName;
         $_SESSION['id_usuario'] = $tryLogin['id_usuario'];
+        header('Location: index.php');
     }
 }
 ?>
