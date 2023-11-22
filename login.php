@@ -27,19 +27,26 @@ if(isset($_GET['submit']) and !empty($_GET['email']) and !empty($_GET['senha']))
     include_once('config.php');
     $emailLogin = $_GET['email'];
     $senhaLogin = $_GET['password'];
-    $tryLogin = mysqli_query($conexao, "SELECT id_usuario,username,password,email FROM usuarios WHERE password = '$senhaLogin' AND email_user = '$emailLogin'");
-    if(mysqli_num_rows($tryLogin) != 1){
+    $tryLogin = mysqli_query($conexao, "SELECT id_usuario, username, password, email FROM usuarios WHERE password = '$senhaLogin' AND email_user = '$emailLogin'");
+
+if ($tryLogin) {
+    $userInfo = mysqli_fetch_assoc($tryLogin);
+
+    if ($userInfo) {
+        $_SESSION['email'] = $emailLogin;
+        $_SESSION['password'] = $senhaLogin;
+        $_SESSION['username'] = $userInfo['username'];
+        $_SESSION['id_usuario'] = $userInfo['id_usuario'];
+        header('Location: index.php');
+    } else {
         unset($_SESSION['email']);
         unset($_SESSION['password']);
         header('Location: login.php');
         echo('Usuário ou senha incorretos');
-    } else {
-        $_SESSION['email'] = $emailLogin;
-        $_SESSION['password'] = $senhaLogin;
-        $_SESSION['username'] = $userName;
-        $_SESSION['id_usuario'] = $tryLogin['id_usuario'];
-        header('Location: index.php');
     }
+} else {
+    // Lógica de tratamento de erro, se necessário
+    echo mysqli_error($conexao);
 }
 ?>
 <!DOCTYPE html>
