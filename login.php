@@ -13,8 +13,8 @@ if(isset($_POST['submit']) and !empty($_POST['email']) and !empty($_POST['passwo
         $_SESSION['email'] = $email;
         $_SESSION['password'] = $senha;
         $_SESSION['username'] = $nome;
-        $sql_id = mysqli_query($conexao,"SELECT id_usuario FROM usuarios WHERE email = $email;");
-        $sql_telefone = mysqli_query($conexao,"SELECT telefone FROM usuarios WHERE email = $email;");
+        $sql_id = mysqli_query($conexao,"SELECT id_usuario FROM usuarios WHERE email = '$email'");
+        $sql_telefone = mysqli_query($conexao,"SELECT telefone FROM usuarios WHERE email = '$email'");
         $_SESSION['id_usuario'] = $sql_id;
         $_SESSION['telefone'] = $sql_telefone;
     } else {
@@ -28,7 +28,6 @@ if(isset($_GET['submit']) and !empty($_GET['email']) and !empty($_GET['senha']))
     $emailLogin = $_GET['email'];
     $senhaLogin = $_GET['password'];
     $tryLogin = mysqli_query($conexao, "SELECT id_usuario,username,password,email FROM usuarios WHERE password = '$senhaLogin' AND email_user = '$emailLogin'");
-    $userName = $tryLogin['username'];
     if(mysqli_num_rows($tryLogin) != 1){
         unset($_SESSION['email']);
         unset($_SESSION['password']);
@@ -49,7 +48,7 @@ if(isset($_GET['submit']) and !empty($_GET['email']) and !empty($_GET['senha']))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entre ou crie sua conta</title>
-    <link rel="website icon" type='png' href="/assets/logo.png">
+    <link rel="website icon" type='png' href="./assets/logo.png">
 </head>
 <body>
     <main>
