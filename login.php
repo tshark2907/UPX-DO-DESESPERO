@@ -1,15 +1,47 @@
 <?php 
-if(isset($_POST['submit']) and !empty($_POST['email']) and !empty($POST['senha'])){
-   /* include_once('config.php');*/
+if(isset($_POST['submit']) and !empty($_POST['email']) and !empty($POST['password'])){
+    include_once('config.php');
     $nome = $_POST['name'];
     $email = $_POST['email'];
     $senha = $_POST['password'];
     $telefone = $_POST['user_phone'];
 
-    /*$result = mysqli_query($conexao,"INSERT INTO usuarios(nome,email,senha,telefone) VALUES ('$nome','$email','$senha','$telefone')");*/
+    $result = mysqli_query($conexao,"INSERT INTO usuarios(nome,email,senha,telefone) VALUES ('$nome','$email','$senha','$telefone')");
+
+    if (mysqli_affected_rows($conexao) == 1) {
+        header('Location: index.php');
+        $_SESSION['email'] = $email;
+        $_SESSION['password'] = $senha;
+        $_SESSION['username'] = $nome;
+        $sql_id = mysqli_query($conexao,"SELECT id_usuario FROM usuarios WHERE email = $email;");
+        $sql_telefone = mysqli_query($conexao,"SELECT telefone FROM usuarios WHERE email = $email;");
+        $_SESSION['id_usuario'] = $sql_id;
+        $_SESSION['telefone'] = $sql_telefone;
+    } else {
+        header('Location: login.php');
+    }
 } else {
     header('Location: login.php');
 };
+if(isset($_GET['submit']) and !empty($_GET['email']) and !empty($_GET['senha'])){
+    include_once('config.php');
+    $emailLogin = $_GET['email'];
+    $senhaLogin = $_GET['password'];
+    $tryLogin = mysqli_query($conexao, "SELECT (*) FROM usuarios WHERE password = '$senhaLogin' AND email_user = '$emailLogin'");
+    $userName = $tryLogin['username'];
+    if(mysqli_num_rows($tryLogin) < 1){
+        unset($_SESSION['email']);
+        unset($_SESSION['password']);
+        header('Location: login.php');
+        echo('Usuário ou senha incorretos');
+    } else {
+        header('Location: index.php');
+        $_SESSION['email'] = $emailLogin;
+        $_SESSION['password'] = $senhaLogin;
+        $_SESSION['username'] = $userName;
+        $_SESSION['id_usuario'] = $tryLogin['id_usuario'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="br">

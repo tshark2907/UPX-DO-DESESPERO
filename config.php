@@ -1,9 +1,9 @@
 <?php 
 $dbHost = 'localhost';
-$dbPort = '3307';
+$dbPort = '3306';
 $dbUsername = 'root';
-$dbPassword = 'Astral5021#';
-$dbName = 'eco_troca_db';
+$dbPassword = '/*Apagado por privacidade*/';
+$dbName = '/*Apagado por privacidade*/';
 
 $conexao = new mysqli($dbHost . ':' . $dbPort, $dbUsername, $dbPassword, $dbName);
 
