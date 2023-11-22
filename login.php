@@ -8,17 +8,19 @@ if(isset($_POST['submit']) and !empty($_POST['email']) and !empty($_POST['passwo
 
     $result = mysqli_query($conexao,"INSERT INTO usuarios(nome,email,senha,telefone) VALUES ('$nome','$email','$senha','$telefone')");
 
-    if (mysqli_affected_rows($conexao) == 1) {
-        header('Location: index.php');
-        $_SESSION['email'] = $email;
-        $_SESSION['password'] = $senha;
-        $_SESSION['username'] = $nome;
-        $sql_id = mysqli_query($conexao,"SELECT id_usuario FROM usuarios WHERE email = '$email'");
-        $sql_telefone = mysqli_query($conexao,"SELECT telefone FROM usuarios WHERE email = '$email'");
-        $_SESSION['id_usuario'] = $sql_id;
-        $_SESSION['telefone'] = $sql_telefone;
-    } else {
-        header('Location: login.php');
+    if (mysqli_affected_rows($conexao) > 0) {
+    // Inserção bem-sucedida
+    header('Location: index.php');
+    $_SESSION['email'] = $email;
+    $_SESSION['password'] = $senha;
+    $_SESSION['username'] = $nome;
+    $sql_id = mysqli_query($conexao,"SELECT id_usuario FROM usuarios WHERE email = '$email'");
+    $sql_telefone = mysqli_query($conexao,"SELECT telefone FROM usuarios WHERE email = '$email'");
+    $_SESSION['id_usuario'] = $sql_id;
+    $_SESSION['telefone'] = $sql_telefone;
+} else {
+    // Inserção falhou
+    header('Location: login.php');
     }
 } else {
     header('Location: login.php');
