@@ -7,14 +7,12 @@ if(isset($_POST['submit'])){
 };
 ?>
 <!DOCTYPE html>
-<html lang="ptbr">
+<html lang="br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entre ou crie sua conta</title>
-    <link rel="stylesheet" href="/style.login.css">
-    <link rel="website icon" type='png' href="/assets/logo.png">
-    <script defer src="/script.login.js"></script>
+    <link rel="website icon" type='png' href="./assets/logo.png">
 </head>
 <body>
     <main>
@@ -22,7 +20,7 @@ if(isset($_POST['submit'])){
             <button class="choose_operation" id="select_create">Criar uma nova conta</button>
             <button class="choose_operation" id="select_login">Entrar</button>
         </div>
-        <form class="inputs" action='login.php' method='POST'>
+        <form id="main_form" class="inputs" action='login.php' method='POST'>
             <div class="field_holder create" id="name_field">
                 <label for="name">Insira seu nome: </label>
                 <input name="name" id="user_name" type="text" placeholder="Nome">
@@ -40,6 +38,8 @@ if(isset($_POST['submit'])){
                 <label for="user_phone">Insira seu telefone: </label>
                 <input name='user_phone' id="user_phone" type="text" placeholder="(XX)XXXXX-XXXX">
             </div>
+            <input name="submit" id='account_create' type="submit" class="action create_account inputs" action='SUBMIT'>Criar conta</input>
+            <input name="submit" id="account_login" type="submit" class="action log_in inputs" action='SUBMIT'>Entrar</input>
         </form>
         <a href="#"><button id='account_create' class="action create_account inputs" action='submit'>Criar conta</button></a>
         <a href="#"><button id="account_login" class="action log_in inputs">Entrar</button></a>
