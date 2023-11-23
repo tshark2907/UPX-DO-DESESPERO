@@ -1,11 +1,8 @@
 <?php 
 if(isset($_POST['submit'])){
     print_r($_POST['name']);
-    <br>
     print_r($_POST['email']);
-    <br>
     print_r($_POST['password']);
-    <br>
     print_r($_POST['user_phone']);
 };
 ?>
@@ -44,7 +41,7 @@ if(isset($_POST['submit'])){
                 <input name='user_phone' id="user_phone" type="text" placeholder="(XX)XXXXX-XXXX">
             </div>
         </form>
-        <a href="#"><button id='account_create' class="action create_account inputs" action>Criar conta</button></a>
+        <a href="#"><button id='account_create' class="action create_account inputs" action='submit'>Criar conta</button></a>
         <a href="#"><button id="account_login" class="action log_in inputs">Entrar</button></a>
     </main>
 </body>
